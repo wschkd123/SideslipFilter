@@ -1,33 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/select_frame_lay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff">
 
-    <RelativeLayout
-        android:id="@+id/topbar_lay"
+
+    <ListView
+        android:id="@+id/selsectFrameLV"
         android:layout_width="match_parent"
-        android:layout_height="80px"
-        android:background="@color/colF4F4F4">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="90dp"
+        android:divider="#E5E5E5"
+        android:dividerHeight="1dp"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:scrollbars="none"/>
 
-        <ImageView
-            android:id="@+id/select_brand_back_im"
-            android:layout_width="46dp"
-            android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@drawable/selector_app_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="筛选"
-            android:textColor="#444444"
-            android:textSize="32px" />
-
-    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,7 +35,7 @@
             android:background="#F4F4F4"
             android:text="重置"
             android:textColor="#666666"
-            android:textSize="32px" />
+            android:textSize="32px"/>
 
         <Button
             android:id="@+id/fram_ok_but"
@@ -55,29 +45,7 @@
             android:background="@color/colorPrimary"
             android:text="确定"
             android:textColor="#ffffff"
-            android:textSize="32px" />
+            android:textSize="32px"/>
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/topbar_lay"
-        android:orientation="vertical">
-
-        <ListView
-            android:id="@+id/selsectFrameLV"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="#E5E5E5"
-            android:dividerHeight="1px"
-            android:footerDividersEnabled="false"
-            android:gravity="center_vertical"
-            android:headerDividersEnabled="false"
-            android:layout_marginBottom="90px"
-            android:scrollbars="none" />
-
-    </LinearLayout>
-
 
 </RelativeLayout>

@@ -4,7 +4,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:background="@color/col666666">
 
     <!--页面布局-->
     <FrameLayout
@@ -24,14 +24,14 @@
     </FrameLayout>
 
     <!--抽屉内容-->
-    <RelativeLayout
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+    <com.example.study.android.androidscreening.ui.FilterSpecAttrView
+        android:id="@+id/filterSpecAttrView"
         android:layout_gravity="end"
-        android:fitsSystemWindows="true"
-        android:orientation="vertical"
-        android:clickable="true" />
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.example.study.android.androidscreening.ui.FilterSpecAttrView>
 
 </android.support.v4.widget.DrawerLayout>
 

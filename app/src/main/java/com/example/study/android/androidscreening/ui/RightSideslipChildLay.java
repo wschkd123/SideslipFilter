@@ -121,10 +121,6 @@ public class RightSideslipChildLay extends FrameLayout {
         @Override
         protected void onSingleClick(View v) {
             switch (v.getId()) {
-                // 返回键功能
-                case R.id.select_brand_back_im:
-                    meanCallBack.isDisMess(position, null, "");
-                    break;
                 // 确认键功能
                 case R.id.select_brand_ok_tv:
                     meanCallBack.isDisMess(position, mVals_data, setUpValsStrs(removeDuplicate(selectBrandData)));

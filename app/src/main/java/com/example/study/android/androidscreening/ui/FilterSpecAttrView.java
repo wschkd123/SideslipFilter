@@ -2,17 +2,15 @@ package com.example.study.android.androidscreening.ui;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
-import android.text.TextUtils;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.example.study.android.androidscreening.R;
 import com.example.study.android.androidscreening.adapter.RightSideslipLayAdapter;
@@ -25,21 +23,143 @@ import java.util.List;
 /**
  * 属性选择的布局及逻辑
  */
-public class RightSideslipLay extends RelativeLayout {
-    private Context mCtx;
-    private ListView selectList;
+public class FilterSpecAttrView extends RelativeLayout {
+    private Context mContext;
+    private ListView mSpecAttrList;
     private Button resetBrand;
     private Button okBrand;
-    private ImageView backBrand;
-    private RelativeLayout mRelateLay;
     private RightSideslipLayAdapter slidLayFrameAdapter;
     private List<AttrList.Attr.Vals> ValsData;
-    private String JsonStr = "{\n" +
-            "    \"attr\": [\n" +
+
+    private static final int EXPAND_COUNT = 8;
+    private String jsonAttr = "{\n" +
+            "    \"brands\": [\n" +
+            "        \"adidas\",\n" +
+            "        \"nike\",\n" +
+            "        \"新百伦\",\n" +
+            "        \"adi\"\n" +
+            "    ],\n" +
+            "    \"attrs\": [\n" +
             "        {\n" +
-            "            \"isoPen\": true,\n" +
-            "            \"single_check\": 1,\n" +
-            "            \"key\": \"品牌\",\n" +
+            "            \"id\": 1001,\n" +
+            "            \"values\": [],\n" +
+            "            \"name\": \"价格\",\n" +
+            "            \"type\": 2\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"id\": 1002,\n" +
+            "            \"values\": [\n" +
+            "                \"有\",\n" +
+            "                \"无\"\n" +
+            "            ],\n" +
+            "            \"name\": \"购买收据\",\n" +
+            "            \"type\": 1\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"id\": 1003,\n" +
+            "            \"values\": [\n" +
+            "                \"有\",\n" +
+            "                \"无\"\n" +
+            "            ],\n" +
+            "            \"name\": \"商品标签\",\n" +
+            "            \"type\": 1\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"id\": 1,\n" +
+            "            \"values\": [\n" +
+            "                \"雪纺\",\n" +
+            "                \"蕾丝\",\n" +
+            "                \"牛仔\",\n" +
+            "                \"皮革\",\n" +
+            "                \"棉布\",\n" +
+            "                \"麻布\",\n" +
+            "                \"羊毛/羊绒\",\n" +
+            "                \"丝绸\",\n" +
+            "                \"呢绒\",\n" +
+            "                \"化纤\",\n" +
+            "                \"混纺\",\n" +
+            "                \"马海毛\"\n" +
+            "            ],\n" +
+            "            \"name\": \"材质\",\n" +
+            "            \"type\": 1\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"id\": 2,\n" +
+            "            \"values\": [\n" +
+            "                \"喇叭\",\n" +
+            "                \"阔腿\",\n" +
+            "                \"直筒\",\n" +
+            "                \"修身\"\n" +
+            "            ],\n" +
+            "            \"name\": \"裤型\",\n" +
+            "            \"type\": 1\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"id\": 3,\n" +
+            "            \"values\": [\n" +
+            "                \"帆布\",\n" +
+            "                \"漆皮\",\n" +
+            "                \"尼龙\",\n" +
+            "                \"人造皮/革\",\n" +
+            "                \"棉麻\",\n" +
+            "                \"羊皮\",\n" +
+            "                \"牛皮\",\n" +
+            "                \"鳄鱼皮\"\n" +
+            "            ],\n" +
+            "            \"name\": \"材质\",\n" +
+            "            \"type\": 1\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"id\": 4,\n" +
+            "            \"values\": [\n" +
+            "                \"平/低跟 (1-3cm)\",\n" +
+            "                \"中跟 (3-6 cm)\",\n" +
+            "                \"高跟 (6-10)\",\n" +
+            "                \"超高跟 (>10cm)\"\n" +
+            "            ],\n" +
+            "            \"name\": \"跟高\",\n" +
+            "            \"type\": 1\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"id\": 5,\n" +
+            "            \"values\": [\n" +
+            "                \"粗跟\",\n" +
+            "                \"细跟\",\n" +
+            "                \"坡跟\",\n" +
+            "                \"松糕\"\n" +
+            "            ],\n" +
+            "            \"name\": \"鞋跟风格\",\n" +
+            "            \"type\": 1\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"id\": 6,\n" +
+            "            \"values\": [\n" +
+            "                \"短款\",\n" +
+            "                \"齐地\",\n" +
+            "                \"拖尾\",\n" +
+            "                \"鱼尾\",\n" +
+            "                \"A字裙\",\n" +
+            "                \"蓬蓬裙\",\n" +
+            "                \"抹胸\",\n" +
+            "                \"单肩\",\n" +
+            "                \"一字肩\",\n" +
+            "                \"V领\",\n" +
+            "                \"心形领\",\n" +
+            "                \"无袖\",\n" +
+            "                \"中袖\",\n" +
+            "                \"长袖\",\n" +
+            "                \"蕾丝\",\n" +
+            "                \"缎面\"\n" +
+            "            ],\n" +
+            "            \"name\": \"风格\",\n" +
+            "            \"type\": 1\n" +
+            "        }\n" +
+            "    ]\n" +
+            "}";
+    private String JsonStr = "{\n" +
+            "    \"attrs\": [\n" +
+            "        {\n" +
+            "            \"name\": \"品牌\",\n" +
             "            \"vals\": [\n" +
             "                {\n" +
             "                    \"val\": \"雅格\"\n" +
@@ -89,8 +209,7 @@ public class RightSideslipLay extends RelativeLayout {
             "            ]\n" +
             "        },\n" +
             "        {\n" +
-            "            \"single_check\": 0,\n" +
-            "            \"key\": \"是否进口\",\n" +
+            "            \"name\": \"是否进口\",\n" +
             "            \"vals\": [\n" +
             "                {\n" +
             "                    \"val\": \"国产\"\n" +
@@ -101,8 +220,7 @@ public class RightSideslipLay extends RelativeLayout {
             "            ]\n" +
             "        },\n" +
             "        {\n" +
-            "            \"single_check\": 0,\n" +
-            "            \"key\": \"灭蚊器类型\",\n" +
+            "            \"name\": \"灭蚊器类型\",\n" +
             "            \"vals\": [\n" +
             "                {\n" +
             "                    \"val\": \"光触媒灭蚊器\"\n" +
@@ -110,8 +228,7 @@ public class RightSideslipLay extends RelativeLayout {
             "            ]\n" +
             "        },\n" +
             "        {\n" +
-            "            \"single_check\": 0,\n" +
-            "            \"key\": \"个数\",\n" +
+            "            \"name\": \"个数\",\n" +
             "            \"vals\": [\n" +
             "                {\n" +
             "                    \"val\": \"1个\"\n" +
@@ -149,8 +266,7 @@ public class RightSideslipLay extends RelativeLayout {
             "            ]\n" +
             "        },\n" +
             "        {\n" +
-            "            \"single_check\": 0,\n" +
-            "            \"key\": \"型号\",\n" +
+            "            \"name\": \"型号\",\n" +
             "            \"vals\": [\n" +
             "                {\n" +
             "                    \"val\": \"SI23\"\n" +
@@ -172,25 +288,27 @@ public class RightSideslipLay extends RelativeLayout {
             "    ]\n" +
             "}";
 
-    public RightSideslipLay(Context context) {
+    public FilterSpecAttrView(Context context) {
         super(context);
-        mCtx = context;
+        mContext = context;
+        inflateView();
+    }
+
+    public FilterSpecAttrView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        mContext = context;
         inflateView();
     }
 
     private void inflateView() {
         View.inflate(getContext(), R.layout.include_right_sideslip_layout, this);
-        selectList = (ListView) findViewById(R.id.selsectFrameLV);
-        backBrand = (ImageView) findViewById(R.id.select_brand_back_im);
+        mSpecAttrList = (ListView) findViewById(R.id.selsectFrameLV);
         resetBrand = (Button) findViewById(R.id.fram_reset_but);
-        mRelateLay = (RelativeLayout) findViewById(R.id.select_frame_lay);
         okBrand = (Button) findViewById(R.id.fram_ok_but);
         //触发点击事件
         resetBrand.setOnClickListener(mOnClickListener);
         okBrand.setOnClickListener(mOnClickListener);
-        backBrand.setOnClickListener(mOnClickListener);
-        mRelateLay.setOnClickListener(mOnClickListener);
-        setUpList();
+        getData();
     }
 
 
@@ -206,14 +324,14 @@ public class RightSideslipLay extends RelativeLayout {
     private AttrList attr;
 
     // 获取当前Sides列表数据
-    private void setUpList() {
+    private void getData() {
         attr = new Gson().fromJson(JsonStr.toString(), AttrList.class);
         if (slidLayFrameAdapter == null) {
-            slidLayFrameAdapter = new RightSideslipLayAdapter(mCtx, setUpBrandList(attr.getAttr()));
-            selectList.setAdapter(slidLayFrameAdapter);
+            slidLayFrameAdapter = new RightSideslipLayAdapter(mContext, setUpBrandList(attr.getAttrs()));
+            mSpecAttrList.setAdapter(slidLayFrameAdapter);
         } else {
             // 当popupwindow消失时调用，更新第一页界面
-            slidLayFrameAdapter.replaceAll(attr.getAttr());
+            slidLayFrameAdapter.replaceAll(attr.getAttrs());
         }
         slidLayFrameAdapter.setAttrCallBack(new RightSideslipLayAdapter.SelechDataCallBack() {
             @Override
@@ -239,12 +357,12 @@ public class RightSideslipLay extends RelativeLayout {
     private RightSideslipChildLay.onMeanCallBack meanCallBack = new RightSideslipChildLay.onMeanCallBack() {
         @Override
         public void isDisMess(int position, List<AttrList.Attr.Vals> mTotalData, String str) {
-            AttrList.Attr res = (AttrList.Attr) attr.getAttr().get(position);
+            AttrList.Attr res = (AttrList.Attr) attr.getAttrs().get(position);
             if (mTotalData != null) {
-                res.setSelectVals(setSelectItem(mTotalData));
+                res.setSelectValues(setSelectItem(mTotalData));
                 res.setTempVals(getValsDatas(mTotalData));
                 res.setShowStr(str);
-                slidLayFrameAdapter.replaceAll(attr.getAttr());
+                slidLayFrameAdapter.replaceAll(attr.getAttrs());
             }
 
             dismissMenuPop();
@@ -266,7 +384,7 @@ public class RightSideslipLay extends RelativeLayout {
         List<AttrList.Attr.Vals> mVals = new ArrayList<AttrList.Attr.Vals>();
         if (mTotalData != null && mTotalData.size() > 0) {
             for (int i = 0; i < mTotalData.size(); i++) {
-                if (mVals.size() >= 8) {
+                if (mVals.size() >= EXPAND_COUNT) {
                     AttrList.Attr.Vals valsAdd = new AttrList.Attr.Vals();
                     valsAdd.setV("查看更多 >");
                     mVals.add(valsAdd);
@@ -294,7 +412,7 @@ public class RightSideslipLay extends RelativeLayout {
 
                 case R.id.fram_reset_but:
                     slidLayFrameAdapter = null;
-                    setUpList();
+                    getData();
                     break;
             }
         }
@@ -323,7 +441,7 @@ public class RightSideslipLay extends RelativeLayout {
             dismissMenuPop();
             return;
         } else {
-            initPopuptWindow(mSelectData, ValsData, pos, title);
+            initPopupWindow(mSelectData, ValsData, pos, title);
         }
     }
 
@@ -333,15 +451,16 @@ public class RightSideslipLay extends RelativeLayout {
     private PopupWindow mMenuPop;
     public RightSideslipChildLay mDownMenu;
 
-    protected void initPopuptWindow(List<AttrList.Attr.Vals> mSelectData, List<AttrList.Attr.Vals> ValsData, int pos, String title) {
+    protected void initPopupWindow(List<AttrList.Attr.Vals> mSelectData, List<AttrList.Attr.Vals> ValsData, int pos, String title) {
         mDownMenu = new RightSideslipChildLay(getContext(), ValsData, mSelectData, pos, title);
         if (mMenuPop == null) {
             mMenuPop = new PopupWindow(mDownMenu, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT);
         }
         mMenuPop.setBackgroundDrawable(new BitmapDrawable());
         mMenuPop.setAnimationStyle(R.style.popupWindowAnimRight);
+        mMenuPop.setOutsideTouchable(true);
         mMenuPop.setFocusable(true);
-        mMenuPop.showAtLocation(RightSideslipLay.this, Gravity.TOP, 100, UiUtils.getStatusBarHeight(mCtx));
+        mMenuPop.showAtLocation(FilterSpecAttrView.this, Gravity.TOP, 100, UiUtils.getStatusBarHeight(mContext));
         mMenuPop.setOnDismissListener(new PopupWindow.OnDismissListener() {
 
             @Override

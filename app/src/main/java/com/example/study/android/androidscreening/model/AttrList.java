@@ -9,28 +9,27 @@ import java.util.List;
 
 public class AttrList implements Serializable {
 
-    private List<Attr> attr;
+    private List<Attr> attrs;
 
-    public List getAttr() {
-        return attr;
+    public List getAttrs() {
+        return attrs;
     }
 
-    public void setAttr(List attr) {
-        this.attr = attr;
+    public void setAttrs(List attrs) {
+        this.attrs = attrs;
     }
 
     public static class Attr implements Serializable {
         //属性值的title
-        private String key;
+        private String name;
         //属性值的title对应的数据
         private List<Vals> vals;
         //设置选中的数据
-        private List<Vals> SelectVals;
+        private List<Vals> selectValues;
         // 设置临时属性值的title临时的数据
         private List<Vals> tempVals;
         //状态是否打开
-        private boolean isoPen = false;
-        private int single_check = 0;
+        private boolean isoPen = true;
         private String showStr = "";
 
 
@@ -42,12 +41,12 @@ public class AttrList implements Serializable {
             this.isoPen = isoPen;
         }
 
-        public List<Vals> getSelectVals() {
-            return SelectVals;
+        public List<Vals> getSelectValues() {
+            return selectValues;
         }
 
-        public void setSelectVals(List<Vals> selectVals) {
-            SelectVals = selectVals;
+        public void setSelectValues(List<Vals> selectValues) {
+            this.selectValues = selectValues;
         }
 
         public List<Vals> getTempVals() {
@@ -74,20 +73,12 @@ public class AttrList implements Serializable {
             this.vals = vals;
         }
 
-        public String getKey() {
-            return key;
+        public String getName() {
+            return name;
         }
 
-        public void setKey(String key) {
-            this.key = key;
-        }
-
-        public int getSingle_check() {
-            return single_check;
-        }
-
-        public void setSingle_check(int single_check) {
-            this.single_check = single_check;
+        public void setName(String name) {
+            this.name = name;
         }
 
         public static class Vals implements Serializable {

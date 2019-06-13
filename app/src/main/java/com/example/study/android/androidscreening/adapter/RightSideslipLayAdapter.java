@@ -43,7 +43,7 @@ public class RightSideslipLayAdapter extends SimpleBaseAdapter<AttrList.Attr> {
         // 获取适配器中的数据
         AttrList.Attr mAttr = getData().get(position);
         // 为item元素的值进行初始化
-        itemFrameTitleTv.setText(mAttr.getKey());
+        itemFrameTitleTv.setText(mAttr.getName());
         itemFrameSelectTv.setText(mAttr.getShowStr());
         // 如果数据不为空，则弹出
         if (mAttr.getVals() != null) {
@@ -78,16 +78,16 @@ public class RightSideslipLayAdapter extends SimpleBaseAdapter<AttrList.Attr> {
     private void fillLv2CateViews(final AttrList.Attr mAttr, List<AttrList.Attr.Vals> list,
                                   AutoMeasureHeightGridView childLvGV, final int pos) {
         final RightSideslipLayChildAdapter mChildAdapter;
-        if (mAttr.getSelectVals() == null) {
-            mAttr.setSelectVals(new ArrayList<AttrList.Attr.Vals>());
+        if (mAttr.getSelectValues() == null) {
+            mAttr.setSelectValues(new ArrayList<AttrList.Attr.Vals>());
         }
         if (childLvGV.getAdapter() == null) {
-            mChildAdapter = new RightSideslipLayChildAdapter(context, list, mAttr.getSelectVals());
+            mChildAdapter = new RightSideslipLayChildAdapter(context, list, mAttr.getSelectValues());
             childLvGV.setAdapter(mChildAdapter);
         } else {
             mChildAdapter = (RightSideslipLayChildAdapter) childLvGV.getAdapter();
-            mAttr.setSelectVals(mAttr.getSelectVals());
-            mChildAdapter.setSearchData(mAttr.getSelectVals());
+            mAttr.setSelectValues(mAttr.getSelectValues());
+            mChildAdapter.setSearchData(mAttr.getSelectValues());
             mChildAdapter.replaceAll(list);
         }
 
@@ -96,9 +96,9 @@ public class RightSideslipLayAdapter extends SimpleBaseAdapter<AttrList.Attr> {
             @Override
             public void CallBackSelectData( List<AttrList.Attr.Vals> SearchData) {
                 mAttr.setShowStr(setupSelectStr(SearchData));
-                mAttr.setSelectVals(SearchData);
+                mAttr.setSelectValues(SearchData);
                 notifyDataSetChanged();
-                selechDataCallBack.setupAttr(setupSelectDataStr(SearchData), mAttr.getKey());
+                selechDataCallBack.setupAttr(setupSelectDataStr(SearchData), mAttr.getName());
 
             }
         });
@@ -106,10 +106,10 @@ public class RightSideslipLayAdapter extends SimpleBaseAdapter<AttrList.Attr> {
         mChildAdapter.setShowPopCallBack(new RightSideslipLayChildAdapter.ShowPopCallBack() {
             @Override
             public void setupShowPopCallBack(List<AttrList.Attr.Vals> SearchData) {
-                mAttr.setSelectVals(SearchData);
+                mAttr.setSelectValues(SearchData);
                 mAttr.setShowStr(setupSelectStr(SearchData));
                 // 打开 查看更多 列表
-                mSelechMoreCallBack.setupMore(SearchData, mAttr.getVals(), pos, mAttr.getKey());
+                mSelechMoreCallBack.setupMore(SearchData, mAttr.getVals(), pos, mAttr.getName());
             }
         });
 
